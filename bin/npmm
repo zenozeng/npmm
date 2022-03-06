@@ -1,6 +1,15 @@
 #!/bin/bash
 
-set +e
+set -e
+
+function cleanup()
+{
+    if [[ -f "package-lock.json" ]]; then
+        sed -i.bak 's|https://registry.npmmirror.com|https://registry.npmjs.org|g' package-lock.json && rm package-lock.json.bak
+    fi
+}
+
+trap cleanup EXIT
 
 if [[ -f "package-lock.json" ]]; then
     sed -i.bak 's|https://registry.npmjs.org|https://registry.npmmirror.com|g' package-lock.json && rm package-lock.json.bak
@@ -12,8 +21,4 @@ else
     npm --registry=https://registry.npmmirror.com \
         --cache=$HOME/.npm/.cache/npmm \
         --disturl=https://npmmirror.com/mirrors/node $@
-fi
-
-if [[ -f "package-lock.json" ]]; then
-    sed -i.bak 's|https://registry.npmmirror.com|https://registry.npmjs.org|g' package-lock.json && rm package-lock.json.bak
 fi
