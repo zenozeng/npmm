@@ -1,6 +1,6 @@
 # npmm
 
-Install npm packages using mirrrors with package-lock.json resolve to registry.npmjs.org
+Install npm packages using mirrrors with package-lock.json resolved to registry.npmjs.org
 
 ## Install
 
